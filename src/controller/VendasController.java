@@ -26,7 +26,7 @@ public class VendasController extends Thread {
 		double timeLogin = ((Math.random() * 1.1) + 0.5);
 		// System.out.println(timeLogin + "login");
 		if (timeLogin > 1) {
-			System.out.println("A thread " + idThread + " levou timeout \n");
+			System.err.println("A thread " + idThread + " levou timeout \n");
 		} else {
 			System.out.println("A thread " + idThread + " logou \n");
 			comprarTicket();
@@ -36,9 +36,15 @@ public class VendasController extends Thread {
 	private void comprarTicket() {
 		int timeCompra = (int) ((Math.random() * 1001) + 2001);
 			if (timeCompra >= 2500) {
-				System.out.println("A pessoa " + idThread + " não conseguiu efetuar a compra por estourar o tempo de sessão \n");
+				System.err.println("A pessoa " + idThread + " não conseguiu efetuar a compra por estourar o tempo de sessão \n");
 			} else {
-				Validacao();
+				try {
+					sleep(timeCompra);
+					Validacao();
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+				
 			}
 	}
 	
@@ -52,7 +58,7 @@ public class VendasController extends Thread {
 				System.out.println("A pessoa " + idThread + " comprou " + pessoa.getTickets() + " ingressos. \n");
 				System.out.println(tickets + " ingressos restantes \n");
 			} else {
-				System.out.println("Ingressos esgotados para tentativa de compra da Thread " + idThread + " \n");
+				System.err.println("Ingressos esgotados para tentativa de compra da Thread " + idThread + " \n");
 			}
 		} catch (Exception e) {
 			
